@@ -38,9 +38,10 @@ plt.xlim(lower, upper)
 idx = np.argwhere(np.diff(np.sign(f - g))).flatten()
 plt.plot(x[idx], f[idx], 'ro')
 plt.show()
-for nIdx in idx :
-    if (upper < idx[nIdx]) :
-     idx.remove(nIdx) 
+idx = [i for i in idx if lower <= i <= upper]
+
 print(idx)
 # updates: added domain input [working] 
 # goal: remove values higher than upper domain limit, return (print) updated array; recognize user input
+# updates: removed values higher than upper domain limit (or lower than lower domain limit) 
+
