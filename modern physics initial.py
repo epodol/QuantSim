@@ -78,4 +78,4 @@ plt.scatter(valid_intersection_points, [f(point) for point in valid_intersection
 plt.legend()
 plt.show()
 #updates: recognizes user input, works for trig graphs 
-# goals: TBD; array of intersection points returns BS values 
+# goals: TBD; array of intersection points returns BS values; doesn't work for e**x
