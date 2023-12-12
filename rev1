@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt 
+from scipy.optimize import fsolve   
+import sympy as sp  
+choice = int(input("Please choose a scenario number: \nFinite Well (E < U_o) [1] \nInfinite Well [2]\nHarmonic Oscillator [3]\n"))
+mass = float(input("Enter mass: "))
+dimensions = float(input("Enter dimensions: "))
+domainL = float(input("Enter lower domain: "))
+domainU = float(input("Enter upper domain: "))
+potential_energy = float(input("Enter potential energy: "))
+if choice == 1:  
+    print("test")
+elif choice == 2:
+    print("test1")
+elif choice == 3: 
+    print("test2")
+
+elif choice != 1 | 2 | 3: 
+    print("Please enter a valid input (1, 2, or 3).")
