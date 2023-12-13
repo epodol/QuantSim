@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 from scipy.optimize import fsolve   
-import sympy as sp  
+import sympy as sp 
+from sympy import Derivative
+from sympy import Integral
+x, y, z = sp.symbols('x y z') 
 choice = int(input("Please choose a scenario number: \nFinite Well (E < U_o) [1] \nInfinite Well [2]\nHarmonic Oscillator [3]\n"))
 mass = float(input("Enter mass: "))
 dimensions = float(input("Enter dimensions: "))
@@ -14,6 +17,5 @@ elif choice == 2:
     print("test1")
 elif choice == 3: 
     print("test2")
-
 elif choice != 1 | 2 | 3: 
-    print("Please enter a valid input (1, 2, or 3).")
+    print("Please enter a valid scenario input(1, 2, or 3).")
