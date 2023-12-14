@@ -6,11 +6,12 @@ from sympy import Derivative
 from sympy import Integral
 x, y, z = sp.symbols('x y z') 
 choice = int(input("Please choose a scenario number: \nFinite Well (E < U_o) [1] \nInfinite Well [2]\nHarmonic Oscillator [3]\n"))
-mass = float(input("Enter mass: "))
-dimensions = float(input("Enter dimensions: "))
-domainL = float(input("Enter lower domain: "))
-domainU = float(input("Enter upper domain: "))
-potential_energy = float(input("Enter potential energy: "))
+print("Next, you will enter parameters. A couple of tips while choosing these parameters: \n1. Potential energy should be in the eV range (1 eV = 1.602*10^(-19) Joules).\n2. Mass should be on a quantum scale (similar to the mass of an electron). ")
+mass = sp.sympify(input("Enter mass: "))
+dimensions = sp.sympify(float(input("Enter dimensions: ")))
+domainL = sp.sympify(float(input("Enter lower domain: ")))
+domainU = sp.sympify(float(input("Enter upper domain: ")))
+potential_energy = sp.sympify(float(input("Enter potential energy: ")))
 if choice == 1:  
     print("test")
 elif choice == 2:
