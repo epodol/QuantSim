@@ -27,10 +27,11 @@ potential_energy_val = float(sp.sympify(input("Enter potential energy: ")))
 
 # Define the equations
 equation1 = sp.sqrt((potential_energy - x) / x) - sp.tan(
-    sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * (1.0545 * (10 ** (-34))))))
+    sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * ((6.941*(10**(-50)))))))
+
 
 equation2 = -sp.sqrt((potential_energy - x) / x) - sp.cot(
-    sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * (1.0545 * (10 ** (-34))))))
+    sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * ((6.941* (10 ** (-50)))))))
 
 # Substitute numerical values into the equations
 equation1 = equation1.subs({mass: mass_val, dimensions: dimensions_val, potential_energy: potential_energy_val})
