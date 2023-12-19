@@ -25,7 +25,6 @@ domainL_val = float(sp.sympify(input("Enter lower domain: ")))
 domainU_val = float(sp.sympify(input("Enter upper domain: ")))
 potential_energy_val = float(sp.sympify(input("Enter potential energy: ")))
 
-# Define the equations
 equation1 = sp.sqrt((potential_energy - x) / x) - sp.tan(
     sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * ((6.941*(10**(-50)))))))
 
@@ -33,22 +32,20 @@ equation1 = sp.sqrt((potential_energy - x) / x) - sp.tan(
 equation2 = -sp.sqrt((potential_energy - x) / x) - sp.cot(
     sp.sqrt((2 * mass * (dimensions ** 2)) / (4 * ((6.941* (10 ** (-50)))))))
 
-# Substitute numerical values into the equations
 equation1 = equation1.subs({mass: mass_val, dimensions: dimensions_val, potential_energy: potential_energy_val})
 equation2 = equation2.subs({mass: mass_val, dimensions: dimensions_val, potential_energy: potential_energy_val})
 
-# Convert symbolic equations to NumPy functions
 equation1_np = sp.lambdify(x, equation1, 'numpy')
 equation2_np = sp.lambdify(x, equation2, 'numpy')
 
-# Use fsolve with NumPy functions
 initial_guess = [float(domainL_val + (domainU_val - domainL_val) * i / 50) for i in range(50)]
 solution1 = fsolve(equation1_np, initial_guess)
 solution2 = fsolve(equation2_np, initial_guess)
 
-# Filter solutions within the specified domain
 valid_solutions_1 = [point for point in solution1 if domainL_val <= point <= domainU_val]
 valid_solutions_2 = [point for point in solution2 if domainL_val <= point <= domainU_val]
 
 print("Solutions 1:", set([round(point, 3) for point in valid_solutions_1]))
 print("Solutions 2:", set([round(point, 3) for point in valid_solutions_2]))
+
+# trying to use brentq instead of fsolve, will update on how that goes 
