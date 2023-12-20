@@ -8,10 +8,10 @@ import warnings
 # ex: length: b_r*2, eV: 40
 
 # Constants
-m_e = physical_constants['electron mass'][0]
+election_mass = physical_constants['electron mass'][0]
 hbar_eVs = physical_constants['reduced Planck constant in eV s'][0]
-ch = physical_constants['atomic unit of charge'][0]
-b_r = physical_constants['Bohr radius'][0]
+atomic_charge = physical_constants['atomic unit of charge'][0]
+bohr_radius = physical_constants['Bohr radius'][0]
 
 
 # Suppress RuntimeWarnings for prod
@@ -19,11 +19,11 @@ b_r = physical_constants['Bohr radius'][0]
 
 # Transcendental equations for even and odd states
 def trans_eq_even(x):
-    return np.sqrt(x / (V_0 - x)) - 1 / (np.tan(np.sqrt(m_e * x * L ** 2 / (2 * hbar_eVs ** 2 * ch))))
+    return np.sqrt(x / (user_depth - x)) - 1 / (np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
 
 
 def trans_eq_odd(x):
-    return np.sqrt(x / (V_0 - x)) + (np.tan(np.sqrt(m_e * x * L ** 2 / (2 * hbar_eVs ** 2 * ch))))
+    return np.sqrt(x / (user_depth - x)) + (np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
 
 
 # Finding roots of the transcendental equations, using Brent's method
@@ -47,18 +47,18 @@ def filter_energy_levels(energies, parity, length, depth):
     filtered_energies = []
     tolerance = 5  # Adjust the tolerance to a reasonable value for your calculations
     for energy in energies:
-        ko = np.sqrt(2 * m_e * (depth - energy)) / np.sqrt(hbar_eVs ** 2 * ch)
-        ki = np.sqrt(2 * m_e * energy) / np.sqrt(hbar_eVs ** 2 * ch)
+        ko = np.sqrt(2 * election_mass * (depth - energy)) / np.sqrt(hbar_eVs ** 2 * atomic_charge)
+        ki = np.sqrt(2 * election_mass * energy) / np.sqrt(hbar_eVs ** 2 * atomic_charge)
         D = np.sqrt(ko / ((0.5 * length * ko) + 1))
         # Check the continuity condition at the boundary for ψ and dψ/dx
         if parity == 'even':
             B = np.sqrt(ko / ((0.5 * length * ko) + 1)) * (np.cos((0.5 * length * ki))) * np.exp(0.5 * length * ko)
-            # For even parity, match the derivative of the wavefunction
+            # For even parity, match the derivative of the wave function
             right_derivative = -ko * B * np.exp(-ko * (length / 2))
             left_derivative = -ki * D * np.sin(ki * (length / 2))
         elif parity == 'odd':
             B = -1 * np.sqrt(ko / ((0.5 * length * ko) + 1)) * (np.sin((0.5 * length * ki))) * np.exp(0.5 * length * ko)
-            # For odd parity, match the derivative of the wavefunction
+            # For odd parity, match the derivative of the wave function
             right_derivative = -ko * B * np.exp(-ko * (length / 2))
             left_derivative = ki * D * np.cos(ki * (length / 2))
         else:
@@ -74,26 +74,26 @@ def filter_energy_levels(energies, parity, length, depth):
 # Define the potential well parameters
 
 # Length of the well
-L = float(parse_expr(str(input("Enter the length of the well: ")), local_dict={'b_r': b_r}))
+user_length = float(parse_expr(str(input("Enter the length of the well: ")), {'b_r': bohr_radius}))
 # add checks for L input to be a float
-if L <= 0:
+if user_length <= 0:
     print("Length must be greater than 0. Please try again.")
     quit()
 
 # Depth of the well
-V_0 = float(input("Enter the well height (in eV): "))
+user_depth = float(input("Enter the well height (in eV): "))
 # add checks for V_0 input to be a float
-if V_0 <= 0:
+if user_depth <= 0:
     print("Depth must be greater than 0. Please try again.")
     quit()
 
 # Find roots (energy levels) for even and odd states
-even_energies = list(find_roots(trans_eq_even, 0, V_0))
-odd_energies = list(find_roots(trans_eq_odd, 0, V_0))
+even_energies = list(find_roots(trans_eq_even, 0, user_depth))
+odd_energies = list(find_roots(trans_eq_odd, 0, user_depth))
 
 # Filter out the energy levels
-even_energies_filtered = filter_energy_levels(even_energies, 'even', L, V_0)
-odd_energies_filtered = filter_energy_levels(odd_energies, 'odd', L, V_0)
+even_energies_filtered = filter_energy_levels(even_energies, 'even', user_length, user_depth)
+odd_energies_filtered = filter_energy_levels(odd_energies, 'odd', user_length, user_depth)
 
 # Print energy levels
 
@@ -113,44 +113,46 @@ else:
 
 
 # Calculate the wave functions
-def calculate_wave_function(x, E, L, parity):
-    ko = np.sqrt(2 * m_e * (V_0 - E)) / np.sqrt(hbar_eVs ** 2 * ch)
-    ki = np.sqrt(2 * m_e * E) / np.sqrt(hbar_eVs ** 2 * ch)
-    B = (-1 if parity == 'odd' else 1) * np.sqrt(ko / ((0.5 * L * ko) + 1)) * (
-        np.sin((0.5 * L * ki)) if parity == 'odd' else np.cos((0.5 * L * ki))) * np.exp(0.5 * L * ko)
-    D = np.sqrt(ko / ((0.5 * L * ko) + 1))
+def calculate_wave_function(x, energy, length, parity):
+    ko = np.sqrt(2 * election_mass * (user_depth - energy)) / np.sqrt(hbar_eVs ** 2 * atomic_charge)
+    ki = np.sqrt(2 * election_mass * energy) / np.sqrt(hbar_eVs ** 2 * atomic_charge)
+    B = (-1 if parity == 'odd' else 1) * np.sqrt(ko / ((0.5 * length * ko) + 1)) * (
+        np.sin((0.5 * length * ki)) if parity == 'odd' else np.cos((0.5 * length * ki))) * np.exp(0.5 * length * ko)
+    D = np.sqrt(ko / ((0.5 * length * ko) + 1))
     result = np.zeros_like(x)
     if parity == 'even':
-        result[x <= (-L / 2)] = B * np.exp(ko * x[x <= (-L / 2)])
-        result[np.logical_and((-L / 2) < x, x < (L / 2))] = D * np.cos(
-            ki * x[np.logical_and((-L / 2) < x, x < (L / 2))])
-        result[x >= (L / 2)] = B * np.exp(-ko * x[x >= (L / 2)])
+        result[x <= (-length / 2)] = B * np.exp(ko * x[x <= (-length / 2)])
+        result[np.logical_and((-length / 2) < x, x < (length / 2))] = D * np.cos(
+            ki * x[np.logical_and((-length / 2) < x, x < (length / 2))])
+        result[x >= (length / 2)] = B * np.exp(-ko * x[x >= (length / 2)])
     elif parity == 'odd':
-        result[x <= (-L / 2)] = B * np.exp(ko * x[x <= (-L / 2)])
-        result[np.logical_and((-L / 2) < x, x < (L / 2))] = D * np.sin(
-            ki * x[np.logical_and((-L / 2) < x, x < (L / 2))])
-        result[x >= (L / 2)] = -B * np.exp(-ko * x[x >= (L / 2)])
+        result[x <= (-length / 2)] = B * np.exp(ko * x[x <= (-length / 2)])
+        result[np.logical_and((-length / 2) < x, x < (length / 2))] = D * np.sin(
+            ki * x[np.logical_and((-length / 2) < x, x < (length / 2))])
+        result[x >= (length / 2)] = -B * np.exp(-ko * x[x >= (length / 2)])
     return result
 
 
-# Plotting the wavefunctions
-x_values = np.linspace(-3 * L, 3 * L, 10000)
-plt.figure(figsize=(12, 6))
+# Plotting the wave functions
+x_values = np.linspace(-3 * user_length, 3 * user_length, 10000)
+plt.figure(1, (12, 6))
 
 
-# Function to plot a limited number of wavefunctions
-def plot_wavefunctions(energies, parity, max_plots=5):
-    for i, E in enumerate(energies[:max_plots]):
-        psi = calculate_wave_function(x_values, E, L, parity)
-        label = f'{parity.capitalize()}, E = {E:.3f} eV'
+# Function to plot a limited number of wave functions
+def plot_wave_functions(energies, parity, max_plots=5):
+    for i, energy in enumerate(energies[:max_plots]):
+        psi = calculate_wave_function(x_values, energy, user_length, parity)
+        label = f'{parity.capitalize()}, E = {energy:.3f} eV'
         plt.plot(x_values, psi, label=label, linestyle='-' if parity == 'even' else '--')
 
 
-plot_wavefunctions(even_energies_filtered, 'even')
-plot_wavefunctions(odd_energies_filtered, 'odd')
-plt.title('Wavefunctions by Energy Level')
+plot_wave_functions(even_energies_filtered, 'even')
+plot_wave_functions(odd_energies_filtered, 'odd')
+
+plt.title('Wave Functions by Energy Level')
 plt.xlabel('Position (x)')
 plt.yticks(color='w')
 plt.legend()
 plt.grid(True)
+
 plt.show()
