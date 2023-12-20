@@ -1,3 +1,7 @@
+# Finite Well Solver
+# Abhinav Raghavan, Eric Podol
+# Solves the finite well problem for a given well length and depth.
+
 import numpy as np
 from scipy.optimize import brentq
 from scipy.constants import physical_constants
