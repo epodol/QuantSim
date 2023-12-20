@@ -1,6 +1,7 @@
 # Finite Well Solver
 # Abhinav Raghavan, Eric Podol
 # Solves the finite well problem for a given well length and depth.
+# Try with length: b_r*6, depth: 40
 
 import numpy as np
 from scipy.optimize import brentq
@@ -9,25 +10,25 @@ from sympy.parsing.sympy_parser import parse_expr
 import matplotlib.pyplot as plt
 import warnings
 
-# ex: length: b_r*2, eV: 40
-
 # Constants
 election_mass = physical_constants['electron mass'][0]
 hbar_eVs = physical_constants['reduced Planck constant in eV s'][0]
 atomic_charge = physical_constants['atomic unit of charge'][0]
 bohr_radius = physical_constants['Bohr radius'][0]
 
-
 # Suppress RuntimeWarnings for prod
-# warnings.filterwarnings('ignore', category=RuntimeWarning)
+warnings.filterwarnings('ignore', category=RuntimeWarning)
+
 
 # Transcendental equations for even and odd states
 def trans_eq_even(x):
-    return np.sqrt(x / (user_depth - x)) - 1 / (np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
+    return np.sqrt(x / (user_depth - x)) - 1 / (
+        np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
 
 
 def trans_eq_odd(x):
-    return np.sqrt(x / (user_depth - x)) + (np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
+    return np.sqrt(x / (user_depth - x)) + (
+        np.tan(np.sqrt(election_mass * x * user_length ** 2 / (2 * hbar_eVs ** 2 * atomic_charge))))
 
 
 # Finding roots of the transcendental equations, using Brent's method
