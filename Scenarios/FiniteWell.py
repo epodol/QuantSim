@@ -197,8 +197,8 @@ def finite_well():
         quit()
 
     # Find roots (energy levels) for even and odd states
-    even_energies = list(find_roots(trans_eq_even, 0, user_depth))
-    odd_energies = list(find_roots(trans_eq_odd, 0, user_depth))
+    even_energies = list(find_roots(lambda x: trans_eq_even(x, user_depth, user_mass, user_length), 0, user_depth))
+    odd_energies = list(find_roots(lambda x: trans_eq_odd(x, user_depth, user_mass, user_length), 0, user_depth))
 
     # Filter out the energy levels
     even_energies_filtered = filter_energy_levels(even_energies, 'even', user_length, user_depth, user_mass)
@@ -233,7 +233,7 @@ def finite_well():
         x_expectation = expectation_value_position(normalized_psi,
                                                    x_values) / user_length  # Convert to multiples of well length
         p_expectation = expectation_value_momentum(normalized_psi, x_values, hbar_eVs) * (
-                    hbar_si / a0)  # Convert to kg*m/s
+                hbar_si / a0)  # Convert to kg*m/s
         rms_p = rms_momentum(normalized_psi, x_values, hbar_eVs) * (hbar_si / a0)  # Convert to kg*m/s
         print(f"\nEnergy: {energy:.3f} eV, Parity: {parity}")
         print(f"  <x>: {x_expectation:.2f}L, <p>: {p_expectation:.2f} kg*m/s, RMS p: {rms_p:.4e} kg*m/s")
