@@ -15,14 +15,13 @@ print("Next, you will enter parameters. A couple of tips while choosing these pa
 
 match choice:
     case 1:
+        finite_well()
+    case 2:
         print("Infinite Well Scenario")
         # TODO: Implement Infinite Well
-    case 2:
-        finite_well()
     case 3:
         print("Quantum Oscillator Scenario")
         # TODO: Implement Quantum Oscillator
     case _:
-        print("Program terminated. Please enter a valid scenario input (1, 2, or 3).")
+        print("Please enter a valid scenario input (1, 2, or 3).")
         quit()
-
