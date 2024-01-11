@@ -9,6 +9,8 @@ x = sp.symbols('x')
 n = int(input("Enter the value for n (integer): "))
 w = float(sp.sympify(input("Enter the angular frequency: ")))
 m = float(sp.sympify(input("Enter the mass: ")))
+x1 = float(sp.sympify(input("Enter the lower bound: ")))
+x2 = float(sp.sympify(input("Enter the upper bound: ")))
 energy_state = (1/2 + n) * h_bar * w
 print("Energy state is ", energy_state, " joules")
 a = m*w/h_bar
@@ -18,5 +20,12 @@ wave_fncn = ((a/np.pi)**0.25)*(1/np.sqrt((2**n)*math.factorial(n))) * hermite * 
 print(wave_fncn)
 fncn = sp.lambdify(x, wave_fncn, 'numpy')
 x_vals = np.linspace(-1000, 1000, 1000) #idk what values to put here
-plt.plot(x_vals, fncn(x_vals))
+pdf = wave_fncn * wave_fncn
+pdf_fncn = sp.lambdify(x, pdf, 'numpy') 
+probability = sp.integrate(pdf, (x, x1, x2))
+print(probability)
+plt.plot(x_vals, fncn(x_vals), label = 'g(x)')
+plt.plot(x_vals, pdf_fncn(x_vals), label = 'PDF')
+plt.legend()
 plt.show()
+
