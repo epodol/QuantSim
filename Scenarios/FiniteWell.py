@@ -1,3 +1,8 @@
+# Test Values:
+# length: b_r * 4
+# depth: 40
+# mass: m_e
+
 import numpy as np
 from scipy.optimize import brentq
 from scipy.constants import physical_constants
