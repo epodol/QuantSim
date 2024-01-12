@@ -3,6 +3,7 @@ import numpy as np
 from sympy import diff 
 import math
 import matplotlib.pyplot as plt 
+from scipy.integrate import quad 
 print("Welcome. You will be entering values for w (measured in radians per second and n (an integer)). This will return the energy state for the quantum harmonic oscillator. \nInput your value for w in the 10^7 and 10^8 range.")
 h_bar = 1.054571817 * 10**(-34) 
 x = sp.symbols('x')
@@ -22,11 +23,13 @@ print(hermite)
 wave_fncn = (((a/np.pi)**0.25)*(1/np.sqrt((2**n)*math.factorial(n))) * hermite * (np.e**((-(x**2))/2)))
 print(wave_fncn)
 fncn = sp.lambdify(x, wave_fncn, 'numpy')
-x_vals = np.linspace(-10000, 10000, 10000) #idk what values to put here
-pdf = wave_fncn * wave_fncn
-probability = sp.integrate(pdf, (x, x1, x2))
-pdf_fncn = sp.lambdify(x, pdf, 'numpy') 
-print(probability)
+x_vals = np.linspace(-10000, 10000, 10000) 
+def integrand(x_values) :
+        return (wave_fncn.subs(x, x_values))**2
+
+probability = quad(integrand, x1, x2)
+pdf_fncn = sp.lambdify(x, integrand(x), 'numpy') 
+print("Probability is ", probability)
 plt.plot(x_vals, fncn(x_vals), label = 'g(x)')
 plt.plot(x_vals, pdf_fncn(x_vals), label = 'PDF')
 plt.legend()
