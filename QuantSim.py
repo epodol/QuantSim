@@ -2,6 +2,7 @@ import sympy as sp
 import warnings
 
 from Scenarios.FiniteWell import finite_well
+from Scenarios.QuantumOscillator import quantum_oscillator
 
 # Suppress RuntimeWarnings for prod
 warnings.filterwarnings('ignore', category=RuntimeWarning)
@@ -21,7 +22,7 @@ match choice:
         # TODO: Implement Infinite Well
     case 3:
         print("Quantum Oscillator Scenario")
-        # TODO: Implement Quantum Oscillator
+        quantum_oscillator()
     case _:
         print("Please enter a valid scenario input (1, 2, or 3).")
         quit()
