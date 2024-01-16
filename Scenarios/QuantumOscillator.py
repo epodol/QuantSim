@@ -24,7 +24,7 @@ wave_fncn = (((a/np.pi)**0.25)*(1/(np.sqrt((2**n)*math.factorial(n)))) * hermite
 wave_fncn = wave_fncn.subs(y, sp.sqrt(a) * x)
 print("Spacial function g(x): ", wave_fncn)
 fncn = sp.lambdify(x, wave_fncn, 'scipy')
-x_vals = np.linspace(x1, x2, 100000) 
+x_vals = np.linspace(x1, x2, 1000000) 
 def integrand(x_values) :
         return ((wave_fncn.subs(x, x_values))**2)
 print("Probability Density Function (PDF): ", integrand(x))
