@@ -4,13 +4,19 @@ from sympy import diff
 import math
 import matplotlib.pyplot as plt 
 from scipy.integrate import quad 
+# complex number i is "j" in py, use this for momentum ?
 print("Welcome. You will be entering values for w (measured in radians per second and n (an integer)). This will return the energy state, the hermite polynomial, the spacial function, graphs of the probability density function and g(x), and the probability for the quantum harmonic oscillator. \nInput your value for w in the 10^7 and 10^8 range.")
 h_bar = 1.054571817 * 10**(-34) # in joule-seconds
+# w = sqrt(k/m), where k = 2*epsilon(n/sigma)^2
 x = sp.symbols('x')
 y = sp.symbols('y')
 n = int(input("Enter the value for n (integer): "))
-w = float(sp.sympify(input("Enter the angular frequency: ")))
+# w = float(sp.sympify(input("Enter the angular frequency: ")))
+sigma_value = float(sp.sympify(input("Enter the sigma value: ")))
+epsilon_value = float(sp.sympify(input("Enter the epsilon value: ")))
 m = float(sp.sympify(input("Enter the mass: ")))
+k = 2*epsilon_value()
+w = np.sqrt(k/m)
 x1 = float(sp.sympify(input("Enter the lower bound: ")))
 x2 = float(sp.sympify(input("Enter the upper bound: ")))
 energy_state = (1/2 + n) * h_bar * w
