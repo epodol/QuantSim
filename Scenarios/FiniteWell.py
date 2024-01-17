@@ -175,7 +175,7 @@ def plot_wave_functions(energies, parity, x_values, length, mass, depth, max_plo
 
 
 def finite_well():
-    print("Finite Well Scenario)")
+    print("Finite Well Scenario")
 
     # Define the potential well parameters
 
