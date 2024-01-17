@@ -10,8 +10,8 @@ warnings.filterwarnings('ignore', category=RuntimeWarning)
 
 
 def main():
-    choice = int(input("Please choose a scenario number:\nFinite Well (E < U_o) [1]\nInfinite Well [2]\nHarmonic "
-                       "Oscillator [3] Quantum Oscillator\n"))
+    choice = int(input("Please choose a scenario number.\n[1] Finite Well (E < U_o)\n[2] Infinite Well"
+                       "\n[3] Harmonic/Quantum Oscillator\nScenario #: "))
 
     match choice:
         case 1:
