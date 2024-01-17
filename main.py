@@ -1,4 +1,5 @@
-import sympy as sp
+"""QuantSim provides three scenarios that the user
+can choose from to simulate quantum mechanical behavior."""
 import warnings
 
 from Scenarios.FiniteWell import finite_well
@@ -10,8 +11,9 @@ warnings.filterwarnings('ignore', category=RuntimeWarning)
 
 
 def main():
-    choice = int(input("Please choose a scenario number.\n[1] Finite Well (E < U_o)\n[2] Infinite Well"
-                       "\n[3] Harmonic/Quantum Oscillator\nScenario #: "))
+    """Main function that prompts the user to choose a scenario."""
+    choice = int(input("Please choose a scenario number.\n[1] Finite Well (E < U_o)\n"
+                       "[2] Infinite Well\n[3] Harmonic/Quantum Oscillator\nScenario #: "))
 
     match choice:
         case 1:
