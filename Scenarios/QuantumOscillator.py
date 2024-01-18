@@ -57,13 +57,14 @@ def quantum_oscillator():
         return (integrand(x) * x).subs(x, x_values)
 
     expected_position_integrated, error = quad(expected_position, x1, x2)
-    def expected_momentum(x_values) : 
+    print("Expected position <x>: ", expected_position_integrated)
+    print("Error: ", error)
+      def expected_momentum(x_values) : 
         t1 = np.conjugate(wave_fncn)
         return ((t1*(cmath.sqrt(-1))*h_bar*diff(wave_fncn, x)).subs(x, x_values))
 print(expected_momentum(x))
-
-    print("Expected position <x>: ", expected_position_integrated)
-    print("Error: ", error)
+momentum_rms = np.sqrt(m*w*h_bar/4)*np.sqrt(2*n+1)
+print("Momentum RMS <p_rms>: ", momentum_rms)
     plt.plot(x_vals, pdf_fncn(x_vals), label='PDF')
     plt.legend()
     plt.show()
