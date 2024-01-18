@@ -58,7 +58,7 @@ def quantum_oscillator():
 
     expected_position_integrated, error = quad(expected_position, x1, x2)
     def expected_momentum(x_values) : 
-        t1 = sp.conjugate(wave_fncn)
+        t1 = np.conjugate(wave_fncn)
         return ((t1*(cmath.sqrt(-1))*h_bar*diff(wave_fncn, x)).subs(x, x_values))
 print(expected_momentum(x))
 
