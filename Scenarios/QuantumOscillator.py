@@ -60,15 +60,19 @@ def quantum_oscillator():
     print("Expected position <x>: ", expected_position_integrated)
     print("Error: ", error)
      def expected_momentum(x_values) : 
-        wave_fncn_conjugate = (((a/np.pi)**0.25)*(1/(np.sqrt((2**n)*math.factorial(n)))) * hermite * (np.e**(((y**2))/2)))
+        wave_fncn_conjugate = (((a/np.pi)**0.25)*(1/(np.sqrt((2**n)*math.factorial(n)))) * hermite * (np.e**(((-y**2))/2)))
         wave_fncn_conjugate = wave_fncn_conjugate.subs(y, sp.sqrt(a)*x)
-        momentum_integrand = wave_fncn_conjugate*diff(wave_fncn, x)
-        return (momentum_integrand.subs(x, x_values))
+        momentum_integrand = wave_fncn_conjugate*wave_fncn
+        integrand_derivated = diff(momentum_integrand, x)
+        return (integrand_derivated.subs(x, x_values))
 expected_momentum_integrated, error_m = quad(expected_momentum, x1, x2) 
-expected_momentum_integrated = expected_momentum_integrated * h_bar*cmath.sqrt(-1)
-print("Expected momentum <p>: ", expected_momentum_integrated)
+expected_momentum_integrated = (expected_momentum_integrated * h_bar*cmath.sqrt(-1)*(-1)).imag
+
+print("Expected momentum (in terms of i) <p>: ", expected_momentum_integrated)
+print("Error: ", error_m)
 momentum_rms = np.sqrt(m*w*h_bar/4)*np.sqrt(2*n+1)
 print("Momentum RMS <p_rms>: ", momentum_rms)
+
     plt.plot(x_vals, pdf_fncn(x_vals), label='PDF')
     plt.legend()
     plt.show()
