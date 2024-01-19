@@ -64,10 +64,10 @@ def quantum_oscillator():
         wave_fncn_conjugate = wave_fncn_conjugate.subs(y, sp.sqrt(a)*x)
         momentum_integrand = wave_fncn_conjugate*(h_bar/cmath.sqrt(-1))*diff(wave_fncn, x)
         return (momentum_integrand.subs(x, x_values))
-        #this works, but how do we get rid of the complex number?
-expected_momentum_integrated, error_m = quad(expected_momentum, x1, x2) #error here, won't integrate complex nunbers. refer to comment above
-print(expected_momentum(x))
-momentum_rms = np.sqrt(m*w*h_bar/4)*np.sqrt(2*n+1) # this works
+expected_momentum_integrated, error_m = quad(expected_momentum, x1, x2) 
+expected_momentum_integrated = expected_momentum_integrated * h_bar*cmath.sqrt(-1)
+print("Expected momentum <p>: ", expected_momentum_integrated)
+momentum_rms = np.sqrt(m*w*h_bar/4)*np.sqrt(2*n+1)
 print("Momentum RMS <p_rms>: ", momentum_rms)
     plt.plot(x_vals, pdf_fncn(x_vals), label='PDF')
     plt.legend()
