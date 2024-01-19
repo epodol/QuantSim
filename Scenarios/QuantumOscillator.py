@@ -62,7 +62,7 @@ def quantum_oscillator():
      def expected_momentum(x_values) : 
         wave_fncn_conjugate = (((a/np.pi)**0.25)*(1/(np.sqrt((2**n)*math.factorial(n)))) * hermite * (np.e**(((y**2))/2)))
         wave_fncn_conjugate = wave_fncn_conjugate.subs(y, sp.sqrt(a)*x)
-        momentum_integrand = wave_fncn_conjugate*(h_bar/cmath.sqrt(-1))*diff(wave_fncn, x)
+        momentum_integrand = wave_fncn_conjugate*diff(wave_fncn, x)
         return (momentum_integrand.subs(x, x_values))
 expected_momentum_integrated, error_m = quad(expected_momentum, x1, x2) 
 expected_momentum_integrated = expected_momentum_integrated * h_bar*cmath.sqrt(-1)
