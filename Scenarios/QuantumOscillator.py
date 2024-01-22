@@ -4,6 +4,10 @@ from sympy import diff
 import math
 import matplotlib.pyplot as plt
 from scipy.integrate import quad
+import warnings
+from scipy.integrate import IntegrationWarning
+
+warnings.filterwarnings('ignore', category=IntegrationWarning)
 
 def quantum_oscillator():
     # complex number i is "j" in py, use this for momentum ?
