@@ -1,35 +1,32 @@
 import sympy as sp
 import numpy as np  
 import matplotlib.pyplot as plt 
-
+from scipy.integrate import quad 
 def infinite_well():
-    width = float(sp.sympify((input("Enter the width of the well: "))))  # Width of the well
-    energy_levels = int(input("Enter the energy level of the well: "))  # Number of energy levels to plot
-    x_values = np.linspace(0, width, 10000)  # Values of x within the well
-
-    # Create subplots
-    fig, axs = plt.subplots(2, 1, sharex=True, figsize=(8, 6))
-
-    # Plot wave functions
-    for n in range(1, energy_levels + 1):
-        wave_function = np.sqrt(2 / width) * np.sin(n * np.pi * x_values / width)
-        axs[0].plot(x_values, wave_function, label=f'n={n}')
-
-    axs[0].set_ylabel('Wave Function')
-    axs[0].set_title('Wave Functions for an Infinite Square Well')
-    axs[0].legend()
-
-    # Plot probability density functions
-    for n in range(1, energy_levels + 1):
-        wave_function = np.sqrt(2 / width) * np.sin(n * np.pi * x_values / width)
-        probability_density = np.abs(wave_function) ** 2
-        axs[1].plot(x_values, probability_density, label=f'P(x) for n={n}', linestyle='dashed')
-
-    axs[1].set_xlabel('Position (x)')
-    axs[1].set_ylabel('Probability Density')
-    axs[1].set_title('Probability Density for an Infinite Square Well')
-    axs[1].legend()
-
-    plt.show()
+    m = float(sp.sympify(input("Enter mass in AMU: ")))
+m = m * 1.66054*10**(-27)
+w = float(sp.sympify(input("Enter width of well: ")))
+n = int(input("Enter energy level: "))
+x = sp.symbols('x')
+k = n * np.pi * 2 / w
+wave_fncn = sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x) 
+pdf = (2/w)*((sp.sin((n*np.pi/w)*x))**2)
+print("Spacial function g(x): ", wave_fncn)
+print("Probability Density Function (PDF): ", pdf)
+wave_fncn_g = sp.lambdify(x, wave_fncn, 'scipy')
+pdf_g = sp.lambdify(x, pdf, 'scipy')
+# find probability using a rectangle, user inputs x (between -L/2 and L/2), a small dx
+x_val = (float(sp.sympify(input("Now, you will select a value x between (-W/2 and W/2) to find the probability of a particle being at that point: " ))))
+pdf = lambda x: (2/w)*((sp.sin((n*np.pi/w)*x))**2)
+probability, err = quad(pdf, x_val, (x_val + (w*0.001)))
+print("Probability", probability)
+print("Error: ", err)
+x_vals = np.linspace(-w/2, w/2, 1000000) 
+plt.plot(x_vals, pdf_g(x_vals), label = 'PDF')
+plt.legend()
+plt.show()
+plt.plot(x_vals, wave_fncn_g(x_vals), label = 'Wave Function')
+plt.legend()
+plt.show()
 
 infinite_well()
