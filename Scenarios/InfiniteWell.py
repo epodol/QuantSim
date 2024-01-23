@@ -30,9 +30,9 @@ expected_position_integrand = lambda x: (2/w)*((sp.sin((n*np.pi/w)*x))**2) * x
 expected_position, err_x = quad(expected_position_integrand, 0, w)
 print("Expeected position <x>: ", expected_position)
 print("Error: ", err_x)
-wave_fncn_derivative = lambda x: diff(wave_fncn, x) # error with derivative
-expected_momentum_integrand = lambda x: ((wave_fncn) * wave_fncn_derivative * h_bar * cmath.sqrt(-1) * (-1)) # error with derivative
-expected_momentum, err_p = quad(expected_momentum_integrand, -1 , 1) # what bounds? 
+expected_momentum_integrand = lambda x: ((sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x) ) * ((n * np.pi * x / w) * sp.sqrt(2/w) * sp.cos(n * np.pi * x / w)))
+expected_momentum, err_p = quad(expected_momentum_integrand, x_val, (x_val + (w*0.001))) # bounds?
+expected_momentum = (expected_momentum * h_bar * cmath.sqrt(-1)).imag
 print("Expected momentum <p>: ", expected_momentum)
 print("Error: ", err_p)
 x_vals = np.linspace(-w/2, w/2, 1000000) 
