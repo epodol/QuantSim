@@ -74,8 +74,16 @@ expected_momentum_integrated = (expected_momentum_integrated * h_bar*cmath.sqrt(
 
 print("Expected momentum (in terms of i) <p>: ", expected_momentum_integrated)
 print("Error: ", error_m)
-momentum_rms = np.sqrt(m*w*h_bar/4)*np.sqrt(2*n+1)
-print("Momentum RMS <p_rms>: ", momentum_rms)
+
+def momentum_rms(x_values) : 
+        wave_fncn_conjugated = (((a/np.pi)**0.25)*(1/(np.sqrt((2**n)*math.factorial(n)))) * hermite * (np.e**(((-y**2))/2))).subs(y, sp.sqrt(a)*x)
+        integrand_rms = diff(wave_fncn, x, 2)
+        momentum_rms_integrand = (h_bar**2) * wave_fncn_conjugated * integrand_rms
+        return ((momentum_rms_integrand.subs(x, x_values)))
+momentum_rms_integrated, err_rms = quad(momentum_rms, x1, x2)
+momentum_rooted = sp.sqrt(abs(momentum_rms_integrated))
+print("Momentum RMS <p_rms>: ", momentum_rooted)
+print("Error: ", err_rms)
 
     plt.plot(x_vals, pdf_fncn(x_vals), label='PDF')
     plt.legend()
