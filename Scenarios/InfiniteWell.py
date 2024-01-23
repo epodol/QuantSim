@@ -30,11 +30,16 @@ expected_position_integrand = lambda x: (2/w)*((sp.sin((n*np.pi/w)*x))**2) * x
 expected_position, err_x = quad(expected_position_integrand, 0, w)
 print("Expeected position <x>: ", expected_position)
 print("Error: ", err_x)
-expected_momentum_integrand = lambda x: ((sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x) ) * ((n * np.pi * x / w) * sp.sqrt(2/w) * sp.cos(n * np.pi * x / w)))
+expected_momentum_integrand = lambda x: ((sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x) ) * ((n * np.pi/ w) * sp.sqrt(2/w) * sp.cos(n * np.pi * x / w)))
 expected_momentum, err_p = quad(expected_momentum_integrand, x_val, (x_val + (w*0.001))) # bounds?
 expected_momentum = (expected_momentum * h_bar * cmath.sqrt(-1)).imag
 print("Expected momentum <p>: ", expected_momentum)
 print("Error: ", err_p)
+momentum_rms_integrand = lambda x: (h_bar**2) * sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x) * ( -((n * np.pi/ w))**2)*((sp.sqrt(2/w) * sp.sin((n*np.pi/w)*x)))
+momentum_rms, err_rms = quad(momentum_rms_integrand, x_val, (x_val + (w*0.001)))
+momentum_rms = sp.sqrt(momentum_rms)*cmath.sqrt(-1)
+print("Momentum RMS <p_rms>: ", momentum_rms)
+print("Error: ", err_rms)
 x_vals = np.linspace(-w/2, w/2, 1000000) 
 plt.plot(x_vals, pdf_g(x_vals), label = 'PDF')
 plt.legend()
